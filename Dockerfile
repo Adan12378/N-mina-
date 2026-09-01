@@ -2,10 +2,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /app
 
-# Copiamos todo el código fuente
 COPY . .
 
-# Publicamos la aplicación en modo Release
 RUN dotnet publish Nomina.csproj -c Release -o out
 
 # --- ETAPA DE EJECUCIÓN ---
@@ -13,15 +11,17 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app/out .
 
-# Render asigna dinámicamente el puerto mediante la variable de entorno PORT.
-# No fijamos un puerto fijo: dejamos que ASPNETCORE_URLS se arme en tiempo
-# de ejecución usando esa variable (ver ENTRYPOINT abajo).
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV NOMINA_AUTO_OPEN=0
 
+# Evita que .NET intente usar FileSystemWatcher (inotify) para vigilar
+# cambios en appsettings.json. Necesario porque contenedores en la nube
+# (Render, y muchos entornos Docker) tienen un límite muy bajo de
+# instancias de inotify, y esa vigilancia no aporta nada útil en
+# producción de todas formas (no vas a editar appsettings.json en vivo
+# dentro de un contenedor desplegado).
+ENV DOTNET_hostBuilder__reloadConfigOnChange=false
+
 EXPOSE 8080
 
-# Usamos la forma "shell" del ENTRYPOINT para poder expandir la variable
-# $PORT que Render inyecta en tiempo de ejecución (no está disponible
-# durante el build, así que no puede fijarse antes con ENV).
 ENTRYPOINT ASPNETCORE_URLS=http://+:${PORT:-8080} dotnet Nomina.dll
