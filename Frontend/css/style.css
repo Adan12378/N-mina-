@@ -1,0 +1,256 @@
+/* =====================================================================
+   VARIABLES GLOBALES — Paleta Corporativa
+   Un solo lugar para toda la identidad visual del sistema.
+   ===================================================================== */
+:root {
+    /* Colores principales (azul corporativo + acentos) */
+    --color-primary: #1F3A5F;
+    --color-primary-dark: #16293F;
+    --color-primary-light: #2E5583;
+    --color-accent: #2E7D32;      /* Verde: valores positivos, neto pagado */
+    --color-danger: #C62828;      /* Rojo: deducciones, alertas, eliminar */
+    --color-warning: #B8860B;     /* Ámbar: advertencias */
+
+    /* Escala de grises (fondo, texto, bordes) */
+    --color-bg: #F4F6F9;
+    --color-surface: #FFFFFF;
+    --color-border: #E1E5EA;
+    --color-text-primary: #1C1F26;
+    --color-text-secondary: #5B6472;
+    --color-text-muted: #98A2B3;
+
+    /* Tipografía */
+    --font-family-base: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-size-base: 14px;
+    --font-size-sm: 12.5px;
+    --font-size-lg: 16px;
+    --font-size-xl: 22px;
+
+    /* Espaciados (escala consistente) */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+
+    /* Bordes y sombras */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+    --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+
+    /* Layout */
+    --sidebar-width: 260px;
+    --topbar-height: 64px;
+}
+
+/* =====================================================================
+   RESET BÁSICO
+   ===================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden; /* La app de escritorio no hace scroll de página completa, solo por panel */
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+/* =====================================================================
+   LAYOUT PRINCIPAL — Sidebar fijo + Contenido
+   ===================================================================== */
+.app-layout {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    height: 100%;
+    background-color: var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg) var(--space-md);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.brand-title {
+    color: #FFFFFF;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+.brand-subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: var(--font-size-sm);
+}
+
+.sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--space-sm);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 12px var(--space-md);
+    border-radius: var(--radius-md);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    text-align: left;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    width: 100%;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+}
+
+.nav-item.active {
+    background-color: var(--color-primary-light);
+    color: #FFFFFF;
+}
+
+.nav-icon {
+    font-size: var(--font-size-lg);
+    width: 22px;
+    text-align: center;
+}
+
+.sidebar-footer {
+    padding: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-version {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: var(--font-size-sm);
+}
+
+/* ---------- CONTENIDO PRINCIPAL ---------- */
+.main-content {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.topbar {
+    height: var(--topbar-height);
+    min-height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-xl);
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.topbar h1 {
+    font-size: var(--font-size-xl);
+}
+
+.topbar-date {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    text-transform: capitalize;
+}
+
+/* ---------- VISTAS (secciones tipo SPA) ---------- */
+.view {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+    overflow-y: auto;
+    height: 100%;
+}
+
+.view.active {
+    display: flex;
+}
+
+/* =====================================================================
+   SCROLLBAR PERSONALIZADO (estético, para look profesional de escritorio)
+   ===================================================================== */
+.view::-webkit-scrollbar {
+    width: 8px;
+}
+
+.view::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.view::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+.view::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-text-muted);
+}

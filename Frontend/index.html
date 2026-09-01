@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Nómina | Gestión de Personal</title>
+
+    <!-- Estilos: base primero, componentes después -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+
+    <!-- Ícono de la app (colócalo en Frontend/assets/icons/favicon.png) -->
+    <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+</head>
+<body>
+
+    <div class="app-layout">
+
+        <!-- ============================================================= -->
+        <!-- SIDEBAR FIJO                                                   -->
+        <!-- ============================================================= -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/icons/logo.png" alt="Logo" class="sidebar-logo" />
+                <div class="sidebar-brand">
+                    <span class="brand-title">NóminaPro</span>
+                    <span class="brand-subtitle">Colombia 2026</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Dashboard</span>
+                </button>
+                <button class="nav-item" data-view="empleados">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-label">Empleados</span>
+                </button>
+                <button class="nav-item" data-view="nomina">
+                    <span class="nav-icon">💰</span>
+                    <span class="nav-label">Liquidar Nómina</span>
+                </button>
+                <button class="nav-item" data-view="historial">
+                    <span class="nav-icon">🗂️</span>
+                    <span class="nav-label">Historial</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="sidebar-version">v1.0.0</span>
+            </div>
+        </aside>
+
+        <!-- ============================================================= -->
+        <!-- CONTENIDO PRINCIPAL                                            -->
+        <!-- ============================================================= -->
+        <div class="main-content">
+
+            <!-- Barra superior -->
+            <header class="topbar">
+                <h1 id="topbar-title">Dashboard</h1>
+                <div class="topbar-actions">
+                    <span class="topbar-date" id="topbar-date"></span>
+                </div>
+            </header>
+
+            <!-- ========================================================= -->
+            <!-- VISTA: DASHBOARD                                           -->
+            <!-- ========================================================= -->
+            <section id="view-dashboard" class="view active">
+                <div class="cards-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Empleados Activos</span>
+                        <span class="stat-value" id="stat-empleados-activos">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Nóminas Liquidadas (Mes)</span>
+                        <span class="stat-value" id="stat-nominas-mes">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total Nómina (Mes)</span>
+                        <span class="stat-value" id="stat-total-nomina">$0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">SMMLV 2026</span>
+                        <span class="stat-value">$1.750.905</span>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2 class="panel-title">Empleados Recientes</h2>
+                    <table class="data-table" id="tabla-empleados-recientes">
+                        <thead>
+                            <tr>
+                                <th>Documento</th>
+                                <th>Nombre Completo</th>
+                                <th>Cargo</th>
+                                <th>Salario Básico</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filas generadas dinámicamente por app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ========================================================= -->
+            <!-- VISTA: EMPLEADOS                                           -->
+            <!-- ========================================================= -->
+            <section id="view-empleados" class="view">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Empleados</h2>
+                        <button class="btn btn-primary" id="btn-nuevo-empleado">+ Nuevo Empleado</button>
+                    </div>
+
+                    <table class="data-table" id="tabla-empleados">
+                        <thead>
+                            <tr>
+                                <th>Documento</th>
+                                <th>Nombre Completo</th>
+                                <th>Cargo</th>
+                                <th>Tipo Contrato</th>
+                                <th>Salario Básico</th>
+                                <th>Aux. Transporte</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filas generadas dinámicamente por empleados.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ========================================================= -->
+            <!-- VISTA: LIQUIDAR NÓMINA                                     -->
+            <!-- ========================================================= -->
+            <section id="view-nomina" class="view">
+                <div class="panel">
+                    <h2 class="panel-title">Liquidar Nómina</h2>
+
+                    <form id="form-nomina" class="form-grid">
+                        <div class="form-field">
+                            <label for="nomina-empleado">Empleado</label>
+                            <select id="nomina-empleado" required>
+                                <option value="">Seleccione un empleado...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-periodo-inicio">Periodo Inicio</label>
+                            <input type="date" id="nomina-periodo-inicio" required />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-periodo-fin">Periodo Fin</label>
+                            <input type="date" id="nomina-periodo-fin" required />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-dias">Días Liquidados</label>
+                            <input type="number" id="nomina-dias" min="1" max="30" value="30" required />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-extra-diurna">Horas Extra Diurnas</label>
+                            <input type="number" id="nomina-extra-diurna" min="0" step="0.5" value="0" />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-extra-nocturna">Horas Extra Nocturnas</label>
+                            <input type="number" id="nomina-extra-nocturna" min="0" step="0.5" value="0" />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-recargo-nocturno">Horas Recargo Nocturno</label>
+                            <input type="number" id="nomina-recargo-nocturno" min="0" step="0.5" value="0" />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-dominical">Horas Dominical/Festivo</label>
+                            <input type="number" id="nomina-dominical" min="0" step="0.5" value="0" />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-otros-devengados">Otros Devengados</label>
+                            <input type="number" id="nomina-otros-devengados" min="0" step="1000" value="0" />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nomina-otras-deducciones">Otras Deducciones</label>
+                            <input type="number" id="nomina-otras-deducciones" min="0" step="1000" value="0" />
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Calcular Nómina</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Resultado del cálculo (oculto hasta que se calcule) -->
+                <div class="panel" id="panel-resultado-nomina" style="display: none;">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Comprobante de Nómina</h2>
+                        <button class="btn btn-secondary" id="btn-descargar-excel">⬇ Descargar Excel</button>
+                    </div>
+
+                    <div class="comprobante-grid">
+                        <div class="comprobante-seccion">
+                            <h3>Devengados</h3>
+                            <table class="data-table data-table-compact" id="tabla-devengados"></table>
+                        </div>
+                        <div class="comprobante-seccion">
+                            <h3>Deducciones</h3>
+                            <table class="data-table data-table-compact" id="tabla-deducciones"></table>
+                        </div>
+                    </div>
+
+                    <div class="neto-pagado-box">
+                        <span>NETO PAGADO</span>
+                        <span id="valor-neto-pagado">$0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================================= -->
+            <!-- VISTA: HISTORIAL                                           -->
+            <!-- ========================================================= -->
+            <section id="view-historial" class="view">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Historial de Nóminas</h2>
+                        <select id="historial-filtro-empleado">
+                            <option value="">Todos los empleados</option>
+                        </select>
+                    </div>
+
+                    <table class="data-table" id="tabla-historial">
+                        <thead>
+                            <tr>
+                                <th>Periodo</th>
+                                <th>Empleado</th>
+                                <th>Total Devengado</th>
+                                <th>Total Deducciones</th>
+                                <th>Neto Pagado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filas generadas dinámicamente por nomina.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- MODAL: Crear/Editar Empleado (compartido, oculto por defecto)  -->
+    <!-- ============================================================= -->
+    <div class="modal-overlay" id="modal-empleado" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-empleado-titulo">Nuevo Empleado</h3>
+                <button class="modal-close" id="btn-cerrar-modal">&times;</button>
+            </div>
+
+            <form id="form-empleado" class="form-grid">
+                <input type="hidden" id="empleado-id" value="" />
+
+                <div class="form-field">
+                    <label for="empleado-documento">Documento</label>
+                    <input type="text" id="empleado-documento" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="empleado-nombre">Nombre</label>
+                    <input type="text" id="empleado-nombre" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="empleado-apellido">Apellido</label>
+                    <input type="text" id="empleado-apellido" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="empleado-cargo">Cargo</label>
+                    <input type="text" id="empleado-cargo" />
+                </div>
+
+                <div class="form-field">
+                    <label for="empleado-salario">Salario Básico</label>
+                    <input type="number" id="empleado-salario" min="0" step="1000" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="empleado-fecha-ingreso">Fecha de Ingreso</label>
+                    <input type="date" id="empleado-fecha-ingreso" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="empleado-tipo-contrato">Tipo de Contrato</label>
+                    <select id="empleado-tipo-contrato">
+                        <option value="TerminoIndefinido">Término Indefinido</option>
+                        <option value="TerminoFijo">Término Fijo</option>
+                        <option value="ObraOLabor">Obra o Labor</option>
+                        <option value="PrestacionServicios">Prestación de Servicios</option>
+                        <option value="Aprendizaje">Aprendizaje</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="empleado-estado">Estado</label>
+                    <select id="empleado-estado">
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                        <option value="Vacaciones">Vacaciones</option>
+                        <option value="LicenciaNoRemunerada">Licencia No Remunerada</option>
+                        <option value="IncapacidadMedica">Incapacidad Médica</option>
+                        <option value="Retirado">Retirado</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancelar-empleado">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TOASTS / Notificaciones                                        -->
+    <!-- ============================================================= -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- ============================================================= -->
+    <!-- SCRIPTS: orden importa (app.js al final, orquesta a los demás) -->
+    <!-- ============================================================= -->
+    <script src="js/empleados.js"></script>
+    <script src="js/nomina.js"></script>
+    <script src="js/excel.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,398 @@
+/* =====================================================================
+   TARJETAS DE ESTADÍSTICAS (Dashboard)
+   ===================================================================== */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-md);
+}
+
+.stat-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* =====================================================================
+   PANELES (contenedores de sección: tablas, formularios)
+   ===================================================================== */
+.panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.panel-title {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+}
+
+/* =====================================================================
+   BOTONES
+   ===================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 10px var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    transition: background-color 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-light);
+}
+
+.btn-secondary {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-border);
+}
+
+.btn-danger {
+    background-color: transparent;
+    color: var(--color-danger);
+}
+
+.btn-danger:hover {
+    background-color: rgba(198, 40, 40, 0.08);
+}
+
+.btn-icon {
+    padding: 6px;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-lg);
+    line-height: 1;
+}
+
+.btn-icon:hover {
+    background-color: var(--color-bg);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* =====================================================================
+   TABLAS DE DATOS
+   ===================================================================== */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-base);
+}
+
+.data-table thead th {
+    text-align: left;
+    padding: 12px var(--space-md);
+    background-color: var(--color-bg);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid var(--color-border);
+    white-space: nowrap;
+}
+
+.data-table tbody td {
+    padding: 12px var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--color-bg);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table .cell-numeric {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.data-table .cell-actions {
+    display: flex;
+    gap: var(--space-xs);
+    justify-content: flex-end;
+}
+
+.data-table-compact thead th,
+.data-table-compact tbody td {
+    padding: 8px var(--space-sm);
+    font-size: var(--font-size-sm);
+}
+
+.data-table-empty {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--color-text-muted);
+}
+
+/* ---------- Badges de estado (dentro de tablas) ---------- */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+.badge-activo {
+    background-color: rgba(46, 125, 50, 0.12);
+    color: var(--color-accent);
+}
+
+.badge-inactivo,
+.badge-retirado {
+    background-color: rgba(198, 40, 40, 0.1);
+    color: var(--color-danger);
+}
+
+.badge-neutro {
+    background-color: rgba(152, 162, 179, 0.15);
+    color: var(--color-text-secondary);
+}
+
+/* =====================================================================
+   FORMULARIOS
+   ===================================================================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-md);
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-field label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    outline: none;
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px rgba(46, 85, 131, 0.15);
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+/* =====================================================================
+   COMPROBANTE DE NÓMINA (resultado del cálculo)
+   ===================================================================== */
+.comprobante-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+}
+
+.comprobante-seccion h3 {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: var(--space-sm);
+}
+
+.neto-pagado-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+    background-color: var(--color-accent);
+    color: #FFFFFF;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+/* =====================================================================
+   MODAL
+   ===================================================================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(16, 24, 40, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 640px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-md);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    background-color: var(--color-surface);
+}
+
+.modal-header h3 {
+    font-size: var(--font-size-lg);
+}
+
+.modal-close {
+    font-size: 24px;
+    line-height: 1;
+    color: var(--color-text-muted);
+    padding: var(--space-xs);
+}
+
+.modal-close:hover {
+    color: var(--color-text-primary);
+}
+
+.modal .form-grid {
+    padding: var(--space-lg);
+}
+
+/* =====================================================================
+   TOASTS (notificaciones flotantes)
+   ===================================================================== */
+.toast-container {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    z-index: 200;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 14px var(--space-md);
+    border-radius: var(--radius-md);
+    background-color: var(--color-text-primary);
+    color: #FFFFFF;
+    font-size: var(--font-size-base);
+    box-shadow: var(--shadow-md);
+    min-width: 260px;
+    animation: toast-in 0.2s ease-out;
+}
+
+.toast-success {
+    background-color: var(--color-accent);
+}
+
+.toast-error {
+    background-color: var(--color-danger);
+}
+
+.toast-warning {
+    background-color: var(--color-warning);
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =====================================================================
+   RESPONSIVE MÍNIMO (la app es de escritorio, pero evita romperse
+   en ventanas más angostas de lo normal en vez de "diseño móvil")
+   ===================================================================== */
+@media (max-width: 900px) {
+    .comprobante-grid {
+        grid-template-columns: 1fr;
+    }
+}
