@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -14,6 +14,18 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Copia toda la carpeta Frontend/ (html, css, js, íconos) al directorio
+         de salida, tanto al compilar localmente como al publicar en Docker.
+         Se usa "/" (no "\") porque MSBuild dentro de contenedores Linux
+         (Render, Docker) no reconoce "\" como separador de ruta válido
+         para el patrón de globbing — con "\" la carpeta queda excluida
+         silenciosamente, sin ningún error visible en el build. -->
+    <Content Include="Frontend/**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
